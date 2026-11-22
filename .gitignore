@@ -1,0 +1,15 @@
+# recorded data
+data/
+
+# environments and caches
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# build output
+build/
+dist/
+*.egg-info/

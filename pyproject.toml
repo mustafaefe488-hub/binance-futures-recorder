@@ -1,0 +1,38 @@
+[project]
+name = "binance-futures-recorder"
+version = "0.1.0"
+description = "Live market-data recorder for Binance USD-M futures: WebSocket streams to daily zstd JSONL, then typed Parquet."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.13,<3.14"
+dependencies = [
+    "pyarrow==26.0.0",
+    "tzdata==2026.6",  # IANA tz database for zoneinfo on Windows (pyarrow UTC timestamps)
+    "websockets==17.4",
+    "zstandard==0.25.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest==9.2.0",
+    "pytest-asyncio==1.4.1",
+]
+
+[build-system]
+requires = ["hatchling==1.33.0"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/binance_futures_recorder"]
+
+[tool.pytest.ini_options]
+minversion = "9.0"
+testpaths = ["tests"]
+addopts = ["-ra", "--strict-markers", "--strict-config", "-m", "not network"]
+markers = [
+    "network: connects to Binance; deselected by default (run with -m network)",
+]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+xfail_strict = true
+filterwarnings = ["error"]
